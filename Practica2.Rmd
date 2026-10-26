@@ -18,17 +18,23 @@ grafico1 <- ggplot(data = ds, mapping = aes(x = MinTemp, y = MaxTemp))
 # 3. Añadir la capa geométrica para el gráfico de dispersión
 grafico1 <- grafico1 + geom_point()
 grafico1
+```
 
+```{r}
 # 4. Crear 'grafico2' asignando color a RainTomorrow y representar la dispersión
 grafico2 <- ggplot(data = ds, mapping = aes(x = MinTemp, y = MaxTemp, color = RainTomorrow)) + 
   geom_point()
 grafico2
+```
 
+```{r}
 # 5. Añadir un título con ggtitle() y almacenarlo en 'grafico3'
 grafico3 <- grafico2 + ggtitle("Relación entre MinTemp y MaxTemp")
 grafico3
+```
 
-# 6. Guardar en formato PDF en la carpeta ./results/
+```{r}
+# 6. Guardar en formato PDF 
 ggsave('./results/Ejercicio1.pdf', plot = grafico3)
 ```
 
@@ -310,6 +316,6 @@ phist_final
 ```
 
 ```{r}
-# Guardar el gráfico resultante en formato PDF
+# 4. Guardar el gráfico resultante en formato PDF
 ggsave('./results/Ejercicio8.pdf', plot = phist_final)
 ```
