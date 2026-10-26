@@ -128,3 +128,43 @@ p_jitter
 # 8. Almacenar en formato PDF 
 ggsave('./results/Ejercicio3.pdf', plot = p_jitter)
 ```
+
+# Ejercicio 4
+
+```{r}
+# 1. Cargar el fichero
+load('data/Ejercicio4_Data.Rdata')
+# 2. Gráfico de puntos: fecha en 'x', ventas en 'y' y color por fabricante
+
+p_puntos <- ggplot(data =DatosEjer4 , mapping = aes(x = Fecha, y = Ventas, color = Fabricante)) + 
+  geom_point()
+p_puntos
+
+# Este gráfico no es válido ya que dificultad apreciar la continuidad de los datos de cada fabricante durante el tiempo.
+```
+
+```{r}
+# 3. Representar gráfico con líneas que unan los puntos
+p_lineas <- ggplot(data =DatosEjer4 , mapping = aes(x = Fecha, y = Ventas, color = Fabricante)) + 
+  geom_point() +
+  geom_line()
+p_lineas
+```
+
+```{r}
+# 4. Modificar para que la tendencia de cada fabricante esté trazada con un tipo de línea diferente 
+p_tendencia <- ggplot(data =DatosEjer4 , mapping = aes(x = Fecha, y = Ventas, color = Fabricante, group= Fabricante)) + 
+  geom_point() +
+  geom_line(aes(linetype= Fabricante))
+p_tendencia
+```
+
+```{r}
+# 5. Añadir el título solicitado
+p_final <- p_tendencia + 
+  ggtitle("Ventas mensuales de diferentes compañías tecnológicas")
+p_final
+
+# 6. Almacenar en formato PDF
+ggsave('./results/Ejercicio4.pdf', plot = p_final)
+```
