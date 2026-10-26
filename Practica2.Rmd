@@ -236,3 +236,44 @@ p_ej6
 #3 Guardar la gráfica en formato PDF
 ggsave('./results/Ejercicio6.pdf', plot = p_ej6)
 ```
+
+# Ejercicio 7
+
+```{r}
+# 1. Cargar el fichero weatherAUS_distributions.RData
+load('./data/weatherAUS_distributions.RData')
+
+# 2. Boxplots de MinTemp por cada año (asegurando que Year se trate como factor)
+p_box <- ggplot(data = ds, mapping = aes(x = factor(Year), y = MinTemp)) +
+  geom_boxplot()
+p_box
+```
+
+```{r}
+# 3. Gráfico de violín de MaxTemp por año con coloreado, etiquetas.
+# Crear el gráfico de violín con las etiquetas y el relleno por año
+p_violin <- ggplot(data = ds, mapping = aes(x = factor(Year), y = MaxTemp, fill = factor(Year))) +
+  geom_violin() +
+  labs(
+    title = "Distribución de temperaturas máximas por año",
+    x = "Año",
+    y = "Temperatura (°C)"
+  )
+
+p_violin
+```
+
+```{r}
+# 4 Modificar 'p_violin' para eliminar leyenda e inclinar el eje x a 45 grados
+p_violin_final <- p_violin + 
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+p_violin_final
+```
+
+```{r}
+# Guardar el gráfico resultante en formato PDF
+ggsave('./results/Ejercicio7.pdf', plot = p_violin_final)
+```
