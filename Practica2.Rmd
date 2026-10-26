@@ -1,0 +1,75 @@
+---
+title: "Practica2"
+author: "Héctor"
+date: "2026-10-26"
+output: html_document
+---
+
+# Ejericio 1
+
+```{r}
+library(ggplot2)
+#1 Carga los objetos directamente en el entorno
+load("data/weatherAUS.RData")
+
+# 2. Crear grafico con aes(x = MinTemp, y = MaxTemp) usando el objeto ds
+grafico1 <- ggplot(data = ds, mapping = aes(x = MinTemp, y = MaxTemp))
+
+# 3. Añadir la capa geométrica para el gráfico de dispersión
+grafico1 <- grafico1 + geom_point()
+grafico1
+
+# 4. Crear 'grafico2' asignando color a RainTomorrow y representar la dispersión
+grafico2 <- ggplot(data = ds, mapping = aes(x = MinTemp, y = MaxTemp, color = RainTomorrow)) + 
+  geom_point()
+grafico2
+
+# 5. Añadir un título con ggtitle() y almacenarlo en 'grafico3'
+grafico3 <- grafico2 + ggtitle("Relación entre MinTemp y MaxTemp")
+grafico3
+
+# 6. Guardar en formato PDF en la carpeta ./results/
+ggsave('./results/Ejercicio1.pdf', plot = grafico3)
+```
+
+# Ejercicio 2
+
+```{r}
+# 1. Gráfico de dispersión: Temp9am en 'x' y Pressure9am en 'y'
+p1 <- ggplot(data = ds, mapping = aes(x = Temp9am, y = Pressure9am)) + 
+  geom_point()
+p1
+```
+
+```{r}
+# 2. Modificación: Forma del punto según RainToday
+p2 <- ggplot(data = ds, mapping = aes(x = Temp9am, y = Pressure9am, shape = RainToday)) + 
+  geom_point()
+p2
+```
+
+```{r}
+# 3. Modificación: Color del punto según RainToday
+p3 <- ggplot(data = ds, mapping = aes(x = Temp9am, y = Pressure9am, color = RainToday)) + 
+  geom_point()
+p3
+
+# Se observa mucho mejor mediante el color, ya que la distinción visual entre tonos resalta más que la diferencia entre formas.
+```
+
+```{r}
+# 4. Añadir título, subtítulo, etiquetas de ejes y leyenda
+p_final <- p3 + labs(
+  title = "Relación entre Temperatura y Presión Atmosférica a las 9:00 AM",
+  subtitle = "Análisis según la presencia de lluvia en el día",
+  x = "Temperatura a las 9am",
+  y = "Presión atmosférica a las 9am",
+  color = "¿Llovió hoy?"
+)
+p_final
+```
+
+```{r}
+# 5. Guardar en PDF 
+ggsave('./results/Ejercicio2.pdf', plot = p_final)
+```
