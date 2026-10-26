@@ -73,3 +73,58 @@ p_final
 # 5. Guardar en PDF 
 ggsave('./results/Ejercicio2.pdf', plot = p_final)
 ```
+
+# Ejercicio 3
+
+```{r}
+# 1. Cargar el fichero
+load('data/iris_tidy.Rdata')
+
+# 2. Ver la estructura del conjunto de datos y sus variables
+str(iris.tidy)
+
+
+```
+
+```{r}
+# 3 y 4. Crear 'iris.grafico1' con el dataset iris.tidy, ejes Species/Value y geom_point()
+iris.grafico1 <- ggplot(data = iris.tidy, mapping = aes(x = Species, y = Value)) + 
+  geom_point()
+iris.grafico1
+```
+
+```{r}
+# 5. Modificar aesthetics para asignar color a la variable part 
+iris.grafico2 <- ggplot(data = iris.tidy, mapping = aes(x = Species, y = Value, color = Part)) + 
+  geom_point()
+iris.grafico2
+```
+
+```{r}
+# 6. Facetado con facet_grid() por la variable Measure
+# - Dispuestos en filas: Measure ~ .
+p_filas <- iris.grafico2 + facet_grid(Measure ~ .)
+p_filas
+
+# - Dispuestos en columnas: . ~ Measure
+p_columnas <- iris.grafico2 + facet_grid(. ~ Measure)
+p_columnas
+
+#La disposición en columnas permite comparar mejor los valores, los datos están menos agrupados y nos deja poder comparar los datos mejor.
+```
+
+```{r}
+# 7. Cambiar la capa geom_point() por geom_jitter()
+p_jitter <- ggplot(data = iris.tidy, mapping = aes(x = Species, y = Value, color = Part)) + 
+  geom_jitter() + 
+  facet_grid(Measure ~ .)
+p_jitter
+
+# geom_jitter() mueve un poco los puntos de forma aleatoria para que no queden todos unos encima de otros y así se pueda ver mejor cuántas observaciones hay.
+
+```
+
+```{r}
+# 8. Almacenar en formato PDF 
+ggsave('./results/Ejercicio3.pdf', plot = p_jitter)
+```
