@@ -277,3 +277,39 @@ p_violin_final
 # Guardar el gráfico resultante en formato PDF
 ggsave('./results/Ejercicio7.pdf', plot = p_violin_final)
 ```
+
+# Ejercicio 8
+
+```{r}
+# 1. Cargar el dataset directamente desde la URL dada en un dataframe
+url <- "http://assets.datacamp.com/blog_assets/chol.txt"
+chol_df <- read.table(url, header = TRUE)
+
+# 2. Crear el histograma
+p_hist <- ggplot(data = chol_df, mapping = aes(x = HEIGHT)) + 
+  geom_histogram(
+    aes(y = ..density..), 
+    breaks = seq(155, 195, length.out = 21), 
+    fill = "blue", 
+    alpha = 0.5, 
+    color = "red"
+  ) + 
+  geom_density(color = "green", size = 1) + 
+  labs(
+    title = "Histograma de la variable Altura",
+    x = "Altura (cm)",
+    y = "Frecuencia"
+  )
+p_hist
+```
+
+```{r}
+# 3. Facetado por la variable MORT
+phist_final <- p_hist + facet_grid(. ~ MORT)
+phist_final
+```
+
+```{r}
+# Guardar el gráfico resultante en formato PDF
+ggsave('./results/Ejercicio8.pdf', plot = phist_final)
+```
