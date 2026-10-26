@@ -134,6 +134,8 @@ ggsave('./results/Ejercicio3.pdf', plot = p_jitter)
 ```{r}
 # 1. Cargar el fichero
 load('data/Ejercicio4_Data.Rdata')
+
+
 # 2. Gráfico de puntos: fecha en 'x', ventas en 'y' y color por fabricante
 
 p_puntos <- ggplot(data =DatosEjer4 , mapping = aes(x = Fecha, y = Ventas, color = Fabricante)) + 
@@ -167,4 +169,70 @@ p_final
 
 # 6. Almacenar en formato PDF
 ggsave('./results/Ejercicio4.pdf', plot = p_final)
+```
+
+# Ejercicio 5
+
+```{r}
+# 1. Cargar el fichero
+load('data/Experimento.Rdata')
+
+# 2. Gráfico de puntos y líneas definiendo linetype y shape dentro de aes() en ggplot()
+pE1 <- ggplot(data = Experimento, mapping = aes(x = Dosis, 
+                                               y = Altura, 
+                                               color = Complemento, 
+                                               linetype = Complemento, 
+                                               shape = Complemento)) + 
+  geom_point() + 
+  geom_line()
+pE1
+```
+
+```{r}
+# 3. Añadir barras de error al gráfico anterior utilizando la variable Error_Altura
+pE2 <- pE1 + 
+  geom_errorbar(aes(ymin = Altura - Error_Altura, ymax = Altura + Error_Altura), width = 0.2)
+pE2
+```
+
+```{r}
+# 4. Crear un gráfico idéntico pero sin definir linetype ni shape en aes() de ggplot()
+pE3 <- ggplot(data = Experimento, mapping = aes(x = Dosis, y = Altura, color = Complemento)) + 
+  geom_point(aes(shape = Complemento)) + 
+  geom_line(aes(linetype = Complemento)) + 
+  geom_errorbar(aes(ymin = Altura - Error_Altura, ymax = Altura + Error_Altura), width = 0.2) + 
+  scale_color_brewer(palette = "Reds")
+pE3
+
+```
+
+```{r}
+# 5. Almacenar el gráfico resultante en formato PDF
+ggsave('./results/Ejercicio5.pdf', plot = pE3)
+```
+
+# Ejercicio 6
+
+```{r}
+# 1. Cargar el fichero iceRiver.RData
+load('data/iceRiver.RData')
+
+?tseries::ice.river
+
+p_ej6 <- ggplot(data = ice.river.df) +
+  geom_line(aes(x = time, y = flow.vat, color = "Vatnsdalsa")) +
+  geom_line(aes(x = time, y = flow.jok, color = "Jokulsa")) +
+  scale_color_manual(values = c("Vatnsdalsa" = "red", "Jokulsa" = "blue")) +
+  labs(
+    title = "Caudal diario de ríos islandeses (3 años)",
+    x = "Tiempo",
+    y = "Caudal",
+    color = "Río"
+  )
+p_ej6
+```
+
+```{r}
+#3 Guardar la gráfica en formato PDF
+ggsave('./results/Ejercicio6.pdf', plot = p_ej6)
 ```
